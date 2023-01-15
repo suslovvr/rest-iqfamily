@@ -50,7 +50,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
 		// Create user accounts
 		createAccountIfNotFound("Иван",new BigDecimal(50));
-		//incAccountBalances();
+		incAccountBalances();
 
 		alreadySetup = true;
 	}
