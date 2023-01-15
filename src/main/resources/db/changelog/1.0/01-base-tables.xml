@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="create-users" author="suslovvr@yahoo.com" logicalFilePath="changelog-1.0">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="users"/>
+            </not>
+        </preConditions>
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="users_pkey" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(500)"/>
+            <column name="DATE_OF_BIRTH" type="TIMESTAMP"/>
+            <column name="PASSWORD" type="VARCHAR(500)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-ACCOUNT" author="suslovvr@yahoo.com" logicalFilePath="changelog-1.0">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="ACCOUNT"/>
+            </not>
+        </preConditions>
+        <createTable tableName="ACCOUNT">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="account_pkey" nullable="false"/>
+            </column>
+            <column name="USER_ID" type="BIGSERIAL">
+            <constraints nullable="false" foreignKeyName="fk_users_account" references="users(id)"/>
+            </column>
+            <column name="BALANCE" type="DECIMAL(12, 2)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-EMAIL_DATA" author="suslovvr@yahoo.com" logicalFilePath="changelog-1.0">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="EMAIL_DATA"/>
+            </not>
+        </preConditions>
+        <createTable tableName="EMAIL_DATA">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="emails_pkey" nullable="false"/>
+            </column>
+            <column name="USER_ID" type="BIGSERIAL">
+                <constraints nullable="false" foreignKeyName="fk_users_email" references="users(id)"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(200)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-PHONE_DATA" author="suslovvr@yahoo.com" logicalFilePath="changelog-1.0">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PHONE_DATA"/>
+            </not>
+        </preConditions>
+        <createTable tableName="PHONE_DATA">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="phones_pkey" nullable="false"/>
+            </column>
+            <column name="USER_ID" type="BIGSERIAL">
+                <constraints nullable="false" foreignKeyName="fk_users_email" references="users(id)"/>
+            </column>
+            <column name="PHONE" type="VARCHAR(13)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

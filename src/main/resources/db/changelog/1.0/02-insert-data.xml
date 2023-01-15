@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="vrsuslov@vtb.ru" id="insert-into-users">
+    <insert tableName="users">
+        <column name="name" value="Иван"/>
+        <column name="date_of_birth" valueDate="2000-01-01"/>
+        <column name="password" value="12345678"/>
+    </insert>
+    </changeSet>
+    <changeSet author="vrsuslov@vtb.ru" id="insert-into-users-2">
+        <insert tableName="users">
+            <column name="name" value="Маша"/>
+            <column name="date_of_birth" valueDate="2001-12-11"/>
+            <column name="password" value="12345678"/>
+        </insert>
+        <insert tableName="users">
+            <column name="name" value="Петр"/>
+            <column name="date_of_birth" valueDate="2002-11-21"/>
+            <column name="password" value="12345678"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vrsuslov@vtb.ru" id="insert-into-emails">
+        <sql>
+            INSERT INTO email_data (user_id, email) values
+            ((SELECT u.id from users u where u.name='Иван'),'q@w.e')
+        </sql>
+        <rollback>
+            ***Rollback query for above SQL goes here***
+        </rollback>
+    </changeSet>
+    <changeSet author="vrsuslov@vtb.ru" id="insert-into-phones">
+        <sql>
+            INSERT INTO phone_data (user_id, phone) values
+            ((SELECT u.id from users u where u.name='Маша'),'+798765432112')
+        </sql>
+        <rollback>
+            ***Rollback query for above SQL goes here***
+        </rollback>
+    </changeSet>
+    <changeSet author="vrsuslov@vtb.ru" id="insert-into-accounts">
+        <sql>
+            INSERT INTO account (user_id, balance) values
+            ((SELECT u.id from users u where u.name='Иван'),100);
+            INSERT INTO account (user_id, balance) values
+            ((SELECT u.id from users u where u.name='Маша'),123.45);
+            INSERT INTO account (user_id, balance) values
+            ((SELECT u.id from users u where u.name='Петр'),56.78);
+        </sql>
+        <rollback>
+            ***Rollback query for above SQL goes here***
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

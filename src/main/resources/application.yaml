@@ -1,0 +1,45 @@
+server:
+  port: 8707
+spring:
+  application:
+    name: iqfamily-task
+  datasource:
+    password: filit
+    platform: postgres
+    url: jdbc:postgresql://127.0.0.1:5432/test_iqfamily
+    username: filit
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: none
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        ddl-auto: none
+    generate-ddl: false
+    show-sql: true
+role:
+  hierarchy: ROLE_ADMIN > ROLE_MANAGER > ROLE_USER
+
+jwt:
+  secret: javachinna
+
+token:
+  audience: secure-app
+  expiration:
+    minutes: 60000
+  header: Authorization
+  issuer: secure-api
+  prefix: 'Bearer '
+  secret: ezZw^WBQZtpHm2C],5xd@SN&-\%Y]FPKymYwn{(Lva<?3-N2U357jXh?D-D%}585
+  type: JWT
+
+login.url: /login
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
