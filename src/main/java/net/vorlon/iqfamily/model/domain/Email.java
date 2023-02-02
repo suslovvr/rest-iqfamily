@@ -2,17 +2,19 @@ package net.vorlon.iqfamily.model.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
-@Data
 @NoArgsConstructor
 //@ToString(callSuper = true)
 @Entity
 @Table(	name = "EMAIL_DATA")
 public class Email {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -34,7 +36,18 @@ public class Email {
 	}
 	@Override
 	public int hashCode() {
-		return   id.intValue() * email.hashCode() ;
+		return email.hashCode();
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Email other = (Email) obj;
+		return Objects.equals(email, other.getEmail());
 	}
 	@Override
 	public String toString(){
@@ -45,5 +58,29 @@ public class Email {
 				.append("email=").append(email)
 				.append("}");
 		return buf.toString();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

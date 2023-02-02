@@ -127,14 +127,17 @@ public class UserServiceImpl implements UserService {
         Optional<User> entity=repository.findByName(authentication.getPrincipal().toString());
         if(entity.isPresent()){
             Email updEmail=null;
-            for(Email theEmail:entity.get().getEmails()) {
+            Set<Email> emails = entity.get().getEmails();
+            for(Email theEmail:emails) {
                 if (theEmail.getEmail().equalsIgnoreCase(old_email)) {
                     updEmail = theEmail;
                     break;
                 }
             }
             if(updEmail!=null) {
+                emails.remove(updEmail);
                 updEmail.setEmail(email);
+                emails.add(updEmail);
                 log.info("user email {} was updated", updEmail.getEmail());
                 repository.save(entity.get());
             }
